@@ -54,9 +54,8 @@ class App extends Component {
   }
 
   searchSpotify(term) {
-    let token = 'BQBenMUc3nOXXD5O1foCjP_sH1X1rHvms-k1ymY0DMTfnGTFZm9qKyUMXJKfWQRSVqkqL84P2ar_DrJN2KUdqeO0oWTY-_pjObMXaOnej37OxMf8TMt0k5yVfbz2-WeVMjDHfGsbq6ABGfbX08bPHc3bD9r3';
     const spotify = new Spotify();
-    spotify.search(term, token).then(tracks => {
+    spotify.search(term).then(tracks => {
       this.setState({searchResults : tracks})
     });
   }
