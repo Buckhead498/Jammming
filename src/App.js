@@ -33,10 +33,11 @@ class App extends Component {
     this.state = {
       searchResults: [],
       playlistName: 'New Playlist',
-      playlistItems: Playlist
+      playlistItems: []
     }
     this.handleTermChange = this.handleTermChange.bind(this);
     this.addSong = this.addSong.bind(this);
+    this.removeSong = this.removeSong.bind(this);
     this.searchSpotify = this.searchSpotify.bind(this);
   }
 
@@ -47,10 +48,27 @@ class App extends Component {
   }
 
   addSong(track) {
-    this.state.playlistItems.push({
-      songName: track.name,
-      key: track.key
+    let newList = this.state.playlistItems;
+    newList.push({
+      songName: track.songName,
+      artistName: track.artistName,
+      albumName: track.albumName,
+      id: track.id
     });
+    this.setState({
+      playlistItems: newList
+    })
+  }
+
+  removeSong(track) {
+    let newList = this.state.playlistItems;
+    let pos = this.state.playlistItems.map(function(t) { return t.id; }).indexOf(track.id);
+    if (pos > -1) {
+      newList.splice(pos, 1);
+    }
+    this.setState({
+      playlistItems: newList
+    })
   }
 
   searchSpotify(term) {
@@ -74,7 +92,7 @@ class App extends Component {
             <div className="Playlist">
               <input onChange={this.handleTermChange} value={this.state.playlistName} />
               <div className="TrackList">
-                <TrackList tracks={Playlist} trackAction="-" />
+                <TrackList tracks={this.state.playlistItems} clickAction={this.removeSong} trackAction="-" />
               </div>
               <a className="Playlist-save">SAVE TO SPOTIFY</a>
             </div>
