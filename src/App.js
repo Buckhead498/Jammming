@@ -5,28 +5,6 @@ import TrackList from './components/TrackList/TrackList.js';
 import Spotify from './util/Spotify.js';
 import SearchBar from './components/SearchBar/SearchBar.js';
 
-const Playlist = [
-  {
-    songName: "Stronger",
-    artistName: "Britney Spears",
-    albumName: "Oops!... I Did It Again",
-    id: 6
-  },
-  {
-    songName: "So Emotional",
-    artistName: "Whitney Houston",
-    albumName: "Whitney",
-    id: 7
-  },
-  {
-    songName: "It's Not Right But It's Okay",
-    artistName: "Whitney Houston",
-    albumName: "My Love Is Your Love",
-    id: 8
-  }
-]
-
-
 class App extends Component {
   constructor(props) {
     super(props);
