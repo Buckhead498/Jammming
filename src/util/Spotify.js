@@ -27,30 +27,45 @@ const Spotify = {
     }
     //let token = accessToken;
     let headers = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+      Authorization: `Bearer ${accessToken}`
     }
-    let userId = '';
-    fetch(
+    return fetch(
       `https://api.spotify.com/v1/me`,
       {headers: headers}
     ).then(response => {
       return response.json();
     }).then(jsonResponse => {
-      userId = jsonResponse.userId;
+      return jsonResponse.id;
+    }).then(userId => {
+      fetch(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({name: name})
+        }
+      ).then(response => {
+        return response.json();
+      }).then(jsonResponse => {
+        return jsonResponse.id;
+      }).then(playlistId => {
+        fetch(
+          `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({"uris": uris})
+          }
+        )
+      })
     })
-    let playlistID;
-    fetch(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
-      {
-        headers: headers
-      }
-    ).then(response => {
-      return response.json();
-    }).then(jsonResponse => {
-      playlistID = jsonResponse.userId;
-    })
+
   },
 
   search(term) {
